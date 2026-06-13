@@ -70,9 +70,42 @@ const updateOrderToPaid = async (req, res) => {
     }
 };
 
+// @GET /api/orders — Saare orders (Admin only)
+const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find()
+            .populate('user', 'name email')
+        res.json(orders)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+};
+
+// @PUT /api/orders/:id/deliver — Order delivered mark karo
+const updateOrderToDelivered = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id)
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order nahi mila' })
+        }
+
+        order.isDelivered = true
+        const updatedOrder = await order.save()
+        res.json(updatedOrder)
+
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+};
+
+
+
 module.exports = {
     createOrder,
     getMyOrders,
     getOrderById,
-    updateOrderToPaid
+    updateOrderToPaid,
+    getAllOrders,          // ← add karo
+    updateOrderToDelivered // ← add karo
 };

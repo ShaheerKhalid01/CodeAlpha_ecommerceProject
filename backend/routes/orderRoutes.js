@@ -1,17 +1,23 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const {
     createOrder,
     getMyOrders,
     getOrderById,
-    updateOrderToPaid
-} = require('../controllers/orderController');
-const { protect } = require('../middleware/authMiddleware');
+    updateOrderToPaid,
+    getAllOrders,
+    updateOrderToDelivered
+} = require('../controllers/orderController')
+const { protect, admin } = require('../middleware/authMiddleware')
 
-// Saare routes protected hain
-router.post('/', protect, createOrder);
-router.get('/myorders', protect, getMyOrders);
-router.get('/:id', protect, getOrderById);
-router.put('/:id/pay', protect, updateOrderToPaid);
+// User routes
+router.post('/', protect, createOrder)
+router.get('/myorders', protect, getMyOrders)
+router.get('/:id', protect, getOrderById)
+router.put('/:id/pay', protect, updateOrderToPaid)
 
-module.exports = router;
+// Admin routes
+router.get('/', protect, admin, getAllOrders)
+router.put('/:id/deliver', protect, admin, updateOrderToDelivered)
+
+module.exports = router

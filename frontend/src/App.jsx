@@ -11,6 +11,10 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
 import OrdersPage from './pages/OrdersPage'
+import AdminRoute from './components/AdminRoute'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminProductsPage from './pages/admin/AdminProductsPage'
+import AdminOrdersPage from './pages/admin/AdminOrdersPage'
 
 const App = () => {
     return (
@@ -46,6 +50,22 @@ const App = () => {
                             <OrdersPage />
                         </ProtectedRoute>
                     } />
+                    // Routes mein add karo
+<Route path='/admin' element={
+    <AdminRoute>
+        <AdminDashboard />
+    </AdminRoute>
+} />
+<Route path='/admin/products' element={
+    <AdminRoute>
+        <AdminProductsPage />
+    </AdminRoute>
+} />
+<Route path='/admin/orders' element={
+    <AdminRoute>
+        <AdminOrdersPage />
+    </AdminRoute>
+} />
                 </Routes>
             </main>
             {/* Footer saare pages pe dikhega */}
